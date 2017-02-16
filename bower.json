@@ -1,0 +1,15 @@
+{
+  "name": "purescript-firebase-client",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "purescript-prelude": "^2.4.0",
+    "purescript-eff": "^2.0.0",
+    "purescript-argonaut-core": "^2.0.1",
+    "purescript-aff": "^2.0.2",
+    "purescript-maybe": "^2.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TinkerTravel/purescript-firebase-client.git"
+  }
+}
