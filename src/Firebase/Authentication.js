@@ -48,6 +48,14 @@ exports.userID = function(user) {
   return user.uid;
 };
 
+exports.userDisplayName = function(user) {
+  return user.displayName
+}
+
+exports.userEMail = function(user) {
+  return user.email
+}
+
 exports.currentUser = function() {
   var user = firebase.auth().currentUser;
   return user === null ? Data_Maybe.Nothing.value : new Data_Maybe.Just(user);

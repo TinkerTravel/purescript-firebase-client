@@ -60,6 +60,8 @@ foreign import signInWithPopup
 foreign import data User :: Type
 
 foreign import userID :: User -> String
+foreign import userDisplayName :: User -> String
+foreign import userEMail :: User -> String
 
 foreign import currentUser
   :: ∀ eff. Eff (firebase :: FIREBASE | eff) (Maybe User)
