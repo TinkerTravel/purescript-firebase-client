@@ -13,6 +13,8 @@ module Firebase.Authentication
 
   , User
   , userID
+  , userEMail
+  , userDisplayName
   , currentUser
   ) where
 
