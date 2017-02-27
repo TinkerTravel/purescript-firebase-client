@@ -45,7 +45,7 @@ exports.signInWithPopup = function(provider) {
 /*----------------------------------------------------------------------------*/
 
 var nullToNothing = function (value) {
-    return (value === null) ? Data_Maybe.Nothing.value : Data_Maybe.Just(value)
+    return (value === null) ? Data_Maybe.Nothing.value : new Data_Maybe.Just(value)
 }
 
 exports.userID = function(user) {
