@@ -13,6 +13,8 @@ module Firebase.Authentication
 
   , User
   , userID
+  , userEmail
+  , userDisplayName
   , currentUser
   ) where
 
@@ -60,6 +62,8 @@ foreign import signInWithPopup
 foreign import data User :: Type
 
 foreign import userID :: User -> String
+foreign import userDisplayName :: User -> Maybe String
+foreign import userEmail :: User -> Maybe String
 
 foreign import currentUser
   :: ∀ eff. Eff (firebase :: FIREBASE | eff) (Maybe User)

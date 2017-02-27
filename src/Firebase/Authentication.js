@@ -44,11 +44,23 @@ exports.signInWithPopup = function (provider) {
 
 /*----------------------------------------------------------------------------*/
 
-exports.userID = function (user) {
-  return user.uid
+var nullToNothing = function (value) {
+    return (value === null) ? Data_Maybe.Nothing.value : new Data_Maybe.Just(value)
 }
 
-exports.currentUser = function () {
+exports.userID = function(user) {
+  return user.uid;
+};
+
+exports.userDisplayName = function(user) {
+  return nullToNothing(user.displayName)
+}
+
+exports.userEmail = function(user) {
+  return nullToNothing(user.email)
+}
+
+exports.currentUser = function() {
   var user = firebase.auth().currentUser
-  return user === null ? Data_Maybe.Nothing.value : new Data_Maybe.Just(user)
+  return nullToNothing(user)
 }
