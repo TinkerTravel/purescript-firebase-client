@@ -52,7 +52,7 @@ exports.userDisplayName = function(user) {
   return user.displayName
 }
 
-exports.userEMail = function(user) {
+exports.userEmail = function(user) {
   return user.email
 }
 
