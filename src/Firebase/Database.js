@@ -13,3 +13,12 @@ exports.onValue = function (path) {
     }
   }
 }
+
+exports.write = function (path) {
+    return function (value) {
+        return function () {
+            var ref = firebase.database().ref(path)
+            ref.set(value, path)
+        }
+    }
+}
