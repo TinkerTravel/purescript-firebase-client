@@ -18,7 +18,7 @@ exports.write = function (path) {
     return function (value) {
         return function () {
             var ref = firebase.database().ref(path)
-            ref.set(value, path)
+            ref.set(value)
         }
     }
 }
