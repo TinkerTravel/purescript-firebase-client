@@ -19,10 +19,11 @@ module Firebase.Authentication
   ) where
 
 import Control.Monad.Aff (Aff)
+import Control.Monad.Aff as Aff
 import Control.Monad.Eff (Eff)
-import Data.Maybe (Maybe)
 import Firebase (FIREBASE)
 import Prelude
+import Data.Maybe (Maybe (..))
 
 --------------------------------------------------------------------------------
 
@@ -52,18 +53,44 @@ foreign import addScope
   -> String
   -> Eff (firebase :: FIREBASE | eff) Unit
 
-foreign import signInWithPopup
+foreign import signInWithPopupAff
+  :: ∀ ui eff
+   . Aff.Canceler (firebase :: FIREBASE | eff)
+  -> Provider (popup :: PopupUI | ui)
+  -> Aff (firebase :: FIREBASE | eff) Unit
+
+signInWithPopup
   :: ∀ ui eff
    . Provider (popup :: PopupUI | ui)
   -> Aff (firebase :: FIREBASE | eff) Unit
+signInWithPopup = signInWithPopupAff Aff.nonCanceler
 
 --------------------------------------------------------------------------------
 
 foreign import data User :: Type
 
 foreign import userID :: User -> String
-foreign import userDisplayName :: User -> Maybe String
-foreign import userEmail :: User -> Maybe String
 
-foreign import currentUser
+foreign import userDisplayNameMay :: Maybe String
+                                  -> (String -> Maybe String)
+                                  -> User
+                                  -> Maybe String
+foreign import userEmailMay :: Maybe String
+                            -> (String -> Maybe String)
+                            -> User
+                            -> Maybe String
+foreign import currentUserMay
+  :: ∀ eff
+   . (Maybe User)
+  -> (User -> Maybe User)
+  -> Eff (firebase :: FIREBASE | eff) (Maybe User)
+
+currentUser
   :: ∀ eff. Eff (firebase :: FIREBASE | eff) (Maybe User)
+currentUser = currentUserMay Nothing Just
+
+userDisplayName :: User -> Maybe String
+userDisplayName = userDisplayNameMay Nothing Just
+
+userEmail :: User -> Maybe String
+userEmail = userEmailMay Nothing Just
