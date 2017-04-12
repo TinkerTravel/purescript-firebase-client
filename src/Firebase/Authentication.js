@@ -46,7 +46,7 @@ exports.userID = function(user) {
 };
 
 var toMaybe = function (nothing, just, value) {
-  if (value === null) return nothing else return just(value)
+  (value === null) ? nothing : just(value)
 }
 
 exports.userDisplayNameMay = function(nothing) {
