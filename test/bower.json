@@ -7,19 +7,10 @@
     "output"
   ],
   "dependencies": {
-    "purescript-prelude": "^3.0.0",
-    "purescript-console": "^3.0.0",
-    "purescript-firebase-client": "../.#db-write",
-    "purescript-eff": "2.0.0",
+    "purescript-prelude": "^2.0.0",
+    "purescript-console": "^2.0.0",
+    "purescript-firebase-client": "../.#more-user-props",
+    "purescript-eff": "^2.0.0",
     "purescript-argonaut": "^2.0.0"
-  },
-  "devDependencies": {
-    "purescript-psci-support": "^3.0.0"
-  },
-  "resolutions": {
-    "purescript-firebase-client": "*",
-    "purescript-console": "^3.0.0",
-    "purescript-eff": "^3.0.0",
-    "purescript-prelude": "^3.0.0"
   }
 }
