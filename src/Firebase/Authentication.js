@@ -1,10 +1,5 @@
 'use strict'
 
-var Control_Monad_Aff = require('../Control.Monad.Aff')
-var Data_Maybe = require('../Data.Maybe')
-
-/*----------------------------------------------------------------------------*/
-
 exports.newEmailProvider = function () {
   return new firebase.auth.EmailAuthProvider()
 }
@@ -33,34 +28,48 @@ exports.addScope = function (provider) {
   }
 }
 
-exports.signInWithPopup = function (provider) {
-  return function (onSuccess, onError) {
-    firebase.auth().signInWithPopup(provider)
-      .then(function (response) { onSuccess({}) })
-      .catch(function (error) { onError(error) })
-    return Control_Monad_Aff.nonCanceler
+exports.signInWithPopupAff = function (nonCanceler) {
+  return function (provider) {
+    return function (onSuccess, onError) {
+      firebase.auth().signInWithPopup(provider)
+        .then(function (response) { onSuccess({}) })
+        .catch(function (error) { onError(error) })
+      return nonCanceler
+    }
   }
 }
 
 /*----------------------------------------------------------------------------*/
 
-var nullToNothing = function (value) {
-    return (value === null) ? Data_Maybe.Nothing.value : new Data_Maybe.Just(value)
-}
-
 exports.userID = function(user) {
   return user.uid;
 };
 
-exports.userDisplayName = function(user) {
-  return nullToNothing(user.displayName)
+var toMaybe = function (nothing, just, value) {
+  return (value === null) ? nothing : just(value)
 }
 
-exports.userEmail = function(user) {
-  return nullToNothing(user.email)
+exports.userDisplayNameMay = function(nothing) {
+  return function(just) {
+    return function(user) {
+      return toMaybe(nothing, just, user.displayName)
+    }
+  }
 }
 
-exports.currentUser = function() {
-  var user = firebase.auth().currentUser
-  return nullToNothing(user)
+exports.userEmailMay = function(nothing) {
+  return function(just) {
+    return function(user) {
+      return toMaybe(nothing, just, user.email)
+    }
+  }
+}
+
+exports.currentUserMay = function(nothing) {
+  return function(just) {
+    return function(user) {
+      var user = firebase.auth().currentUser
+      return toMaybe(nothing, just, user)
+    }
+  }
 }
