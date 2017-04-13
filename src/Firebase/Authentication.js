@@ -46,7 +46,7 @@ exports.userID = function(user) {
 };
 
 var toMaybe = function (nothing, just, value) {
-  (value === null) ? nothing : just(value)
+  return (value === null) ? nothing : just(value)
 }
 
 exports.userDisplayNameMay = function(nothing) {
@@ -57,7 +57,7 @@ exports.userDisplayNameMay = function(nothing) {
   }
 }
 
-exports.userEmailMay = function(user) {
+exports.userEmailMay = function(nothing) {
   return function(just) {
     return function(user) {
       return toMaybe(nothing, just, user.email)
@@ -65,7 +65,7 @@ exports.userEmailMay = function(user) {
   }
 }
 
-exports.currentUserMay = function() {
+exports.currentUserMay = function(nothing) {
   return function(just) {
     return function(user) {
       var user = firebase.auth().currentUser
